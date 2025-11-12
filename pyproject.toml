@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ascend-or-agartha"
+version = "0.1.0"
+description = "Ascend or Agartha – 2D life-sim + social AI sandbox (engine + CLI)"
+requires-python = ">=3.10"
+dependencies = [
+  "pydantic>=2.5",
+  "fastapi>=0.115",
+  "uvicorn>=0.30",
+]
+
+[tool.setuptools.packages.find]
+include = ["aoa_core*", "cli_game*", "server*"]

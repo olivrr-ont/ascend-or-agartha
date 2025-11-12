@@ -1,0 +1,8 @@
+[
+  {"id":"dishwasher","name":"Dishwasher","pslMin":2,"wage":8},
+  {"id":"barista","name":"Barista","pslMin":4,"wage":12},
+  {"id":"retail_model","name":"Retail Model","pslMin":6,"wage":22},
+  {"id":"brand_amb","name":"Brand Ambassador","pslMin":7,"wage":30},
+  {"id":"vip_host","name":"VIP Host","pslMin":8,"wage":40}
+]
+

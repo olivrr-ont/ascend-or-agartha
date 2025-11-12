@@ -1,0 +1,11 @@
+[
+  {"id":"skincare_basic","name":"Basic Skincare","type":"consumable","price":30,"effects":[{"stat":"skinQuality","delta":0.2,"durationDays":1}]},
+  {"id":"gua_sha","name":"Gua-sha Tool","type":"consumable","price":20,"effects":[{"stat":"bloat","delta":-1,"durationDays":1}]},
+  {"id":"bananas","name":"Bananas","type":"consumable","price":2,"effects":[{"stat":"bloat","delta":-0.5,"durationDays":1}]},
+  {"id":"coconut_water","name":"Coconut Water","type":"consumable","price":4,"effects":[{"stat":"bloat","delta":-0.5,"durationDays":1}]},
+  {"id":"junk_food","name":"Junk Food","type":"consumable","price":3,"effects":[{"stat":"skinQuality","delta":-0.2,"durationDays":1}]},
+  {"id":"contacts","name":"Colored Contacts","type":"consumable","price":15,"effects":[{"stat":"coloring","delta":2,"durationDays":1}]},
+  {"id":"dye","name":"Hair Dye","type":"consumable","price":30,"effects":[{"stat":"coloring","delta":1,"durationDays":7}]},
+  {"id":"raw_milk","name":"Raw Milk","type":"consumable","price":6,"effects":[]},
+  {"id":"risky_bone","name":"Risky Bone Feature (Fictional)","type":"service","price":100,"effects":[]}
+]

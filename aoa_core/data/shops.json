@@ -1,0 +1,5 @@
+[
+  {"id":"grocer01","name":"Green Grocer","inventory":["bananas","coconut_water","junk_food","raw_milk"],"hours":{"open":9,"close":21}},
+  {"id":"pharmacy01","name":"City Pharmacy","inventory":["skincare_basic","gua_sha","contacts","dye"],"hours":{"open":9,"close":21}},
+  {"id":"gym01","name":"Iron Heaven","inventory":[],"hours":{"open":6,"close":23}}
+]

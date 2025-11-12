@@ -1,0 +1,9 @@
+{
+  "lines": [
+    {"cmd":"say","text":"You stand before the Agartha Gate."},
+    {"cmd":"wait","time":0.8},
+    {"cmd":"say","text":"Only the chosen may enter."},
+    {"cmd":"wait","time":0.6},
+    {"cmd":"end"}
+  ]
+}

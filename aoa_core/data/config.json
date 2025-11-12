@@ -1,0 +1,5 @@
+{
+  "dayLengthMinutes": 9,
+  "shopHours": {"open": 9, "close": 21},
+  "gymHours": {"open": 6, "close": 23}
+}
