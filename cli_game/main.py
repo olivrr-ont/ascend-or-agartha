@@ -79,7 +79,7 @@ def main():
         print("[6] Use contacts (+Coloring temp)")
         print("[7] Risky bone feature (fictional)")
         print("[8] Sleep (end day)")
-        print("[9] Agartha Gate check]")
+        print("[9] Agartha Gate check")
         print("[B] Browse shop / buy")
         print("[I] Inventory / use")
         print("[S] Save & Quit")
