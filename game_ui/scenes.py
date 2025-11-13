@@ -207,7 +207,48 @@ class WorldScene(Scene):
         self.camy = max(0, min(py_pix - vh//2, H*self.tile - vh))
 
     def draw(self, surf: pg.Surface):
-        raise NotImplementedError
+        """
+        Minimal orthographic renderer so WorldScene is never abstract at runtime.
+        Your IsometricWorldScene still overrides this for 2.5D.
+        """
+        m = self.curmap()
+        tile = self.tile
+
+        # background
+        surf.fill(m.floor_color)
+
+        # regions
+        for r in m.regions:
+            rect = pg.Rect(r.x*tile - self.camx, r.y*tile - self.camy, r.w*tile, r.h*tile)
+            pg.draw.rect(surf, r.color, rect)
+
+        # walls
+        for (x, y) in m.walls:
+            pg.draw.rect(surf, (12,12,16), pg.Rect(x*tile - self.camx, y*tile - self.camy, tile, tile))
+
+        # hotspots (colored tiles + labels + [E] hint)
+        color_map = {"door":(180,190,220),"bed":(100,120,180),"mirror":(140,220,240),
+                     "laptop":(200,200,80),"shop":(120,200,120),"gate":(220,200,140)}
+        for _, hs in m.hotspots.items():
+            x, y = hs.pos
+            rect = pg.Rect(x*tile - self.camx, y*tile - self.camy, tile, tile)
+            pg.draw.rect(surf, color_map.get(hs.type, (200,200,200)), rect)
+            _centered_text(surf, hs.label, (rect.centerx, rect.top-10))
+            if abs(self.px - x) <= 0.8 and abs(self.py - y) <= 0.8:
+                hints = {"door":"[E] Enter","bed":"[E] Sleep","mirror":"[E] Face",
+                         "laptop":"[E] Face","shop":"[E] Shop","gate":"[E] Approach"}
+                _centered_text(surf, hints[hs.type], (rect.centerx, rect.bottom+12), color=(255,245,140))
+
+        # player (uses your cosmetic sprite)
+        px, py = int(self.px*tile - self.camx), int(self.py*tile - self.camy)
+        # shadow
+        pg.draw.ellipse(surf, (0,0,0,80), pg.Rect(px-14, py+10, 28, 10))
+        # tints from player features
+        p = self.player_ref()
+        from game_ui.sprites import eye_rgb, hair_rgb  # local import to avoid cycles
+        e_rgb = eye_rgb(p.features.get("eye","Brown"))
+        h_rgb = hair_rgb(p.features.get("hair","Brown"))
+        self.player_sprite.draw(surf, px, py, moving=self._moving, eye_color=e_rgb, hair_color=h_rgb)
 
 # -------------------------------------------------
 # Isometric renderer (2.5D)
@@ -539,47 +580,4 @@ class CutsceneScene(Scene):
             self.idx = len(self.script["lines"])
         else:
             self.idx += 1
-
-def draw(self, surf: pg.Surface):
-    """
-    Minimal orthographic renderer so WorldScene is never abstract at runtime.
-    Your IsometricWorldScene still overrides this for 2.5D.
-    """
-    m = self.curmap()
-    tile = self.tile
-
-    # background
-    surf.fill(m.floor_color)
-
-    # regions
-    for r in m.regions:
-        rect = pg.Rect(r.x*tile - self.camx, r.y*tile - self.camy, r.w*tile, r.h*tile)
-        pg.draw.rect(surf, r.color, rect)
-
-    # walls
-    for (x, y) in m.walls:
-        pg.draw.rect(surf, (12,12,16), pg.Rect(x*tile - self.camx, y*tile - self.camy, tile, tile))
-
-    # hotspots (colored tiles + labels + [E] hint)
-    color_map = {"door":(180,190,220),"bed":(100,120,180),"mirror":(140,220,240),
-                 "laptop":(200,200,80),"shop":(120,200,120),"gate":(220,200,140)}
-    for _, hs in m.hotspots.items():
-        x, y = hs.pos
-        rect = pg.Rect(x*tile - self.camx, y*tile - self.camy, tile, tile)
-        pg.draw.rect(surf, color_map.get(hs.type, (200,200,200)), rect)
-        _centered_text(surf, hs.label, (rect.centerx, rect.top-10))
-        if abs(self.px - x) <= 0.8 and abs(self.py - y) <= 0.8:
-            hints = {"door":"[E] Enter","bed":"[E] Sleep","mirror":"[E] Face",
-                     "laptop":"[E] Face","shop":"[E] Shop","gate":"[E] Approach"}
-            _centered_text(surf, hints[hs.type], (rect.centerx, rect.bottom+12), color=(255,245,140))
-
-    # player (uses your cosmetic sprite)
-    px, py = int(self.px*tile - self.camx), int(self.py*tile - self.camy)
-    # shadow
-    pg.draw.ellipse(surf, (0,0,0,80), pg.Rect(px-14, py+10, 28, 10))
-    # tints from player features
-    p = self.player_ref()
-    from game_ui.sprites import eye_rgb, hair_rgb  # local import to avoid cycles
-    e_rgb = eye_rgb(p.features.get("eye","Brown"))
-    h_rgb = hair_rgb(p.features.get("hair","Brown"))
-    self.player_sprite.draw(surf, px, py, moving=self._moving, eye_color=e_rgb, hair_color=h_rgb)
+
