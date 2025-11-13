@@ -19,6 +19,7 @@ class Flags:
     ateJunkToday: bool=False
     riskyCooldown: int=0
     selfDestructArmed: bool=False
+    rawMilkBuffDays: int=0
 
 @dataclass
 class Streaks:

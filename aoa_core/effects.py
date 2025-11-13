@@ -3,6 +3,8 @@ from typing import Literal
 from .rng import clamp, chance
 from .psl import coloring_from_traits
 
+RAW_MILK_DURATION_DAYS = 3
+
 @dataclass
 class Effect:
     stat: Literal["bloat","skinQuality","boneMass","coloring"]
@@ -45,8 +47,10 @@ def daily_resolution(player, active_effects: list[Effect]):
         player.flags.ateJunkToday = False
 
     # 4) raw milk nightly proc (3%)
-    if chance(0.03):
-        player.stats.boneMass = min(20, player.stats.boneMass + 1)
+    if player.flags.rawMilkBuffDays > 0:
+        if chance(0.03):
+            player.stats.boneMass = min(20, player.stats.boneMass + 1)
+        player.flags.rawMilkBuffDays -= 1
 
     # 5) risky cooldown tick
     if player.flags.riskyCooldown > 0:

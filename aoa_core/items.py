@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Dict, Any, Tuple
-from .effects import Effect
+from .effects import Effect, RAW_MILK_DURATION_DAYS
 from .economy import PriceBook, can_afford, spend
 
 def load_items() -> Dict[str, Any]:
@@ -45,6 +45,8 @@ def use_item(player, item_id: str, items_db: Dict[str,Any], active_effects: list
     # special-case flags that the GDD calls out
     if item_id == "junk_food":
         player.flags.ateJunkToday = True
+    elif item_id == "raw_milk":
+        player.flags.rawMilkBuffDays += RAW_MILK_DURATION_DAYS
 
     # translate JSON effects -> Effect objects and enqueue
     effs = it.get("effects", [])
